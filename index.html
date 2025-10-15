@@ -1,11 +1,401 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>বইয়ের অধ্যায়সূচি — Glassmorphism TOC</title>
+  <style>
+    :root{
+      --bg: radial-gradient(1200px 800px at 20% 10%, #5ee7df33, transparent 60%),
+            radial-gradient(900px 600px at 80% 30%, #b490ca33, transparent 60%),
+            linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      --glass: rgba(255,255,255,.10);
+      --glass-2: rgba(255,255,255,.16);
+      --border: rgba(255,255,255,.28);
+      --text: #f5f7fb;
+      --muted:#cfd6e6;
+      --accent:#ffd166;
+      --star3:#ffc107; --star2:#e9f1ff; --star1:#b0bec5;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0; color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans Bengali","SolaimanLipi","Kalpurush", sans-serif;
+      background:var(--bg) fixed; background-size:cover;
+    }
+    .container{max-width:1100px;margin:32px auto; padding:16px}
+    .glass{
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:18px;
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      box-shadow:0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    header.glass{position:sticky;top:0;z-index:50;padding:14px 16px;margin-bottom:16px}
+    .hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .title{font-weight:800;letter-spacing:.2px;font-size:clamp(18px,2.2vw,24px)}
+    .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    input[type="search"]{
+      background:var(--glass-2);color:var(--text);
+      border:1px solid var(--border);border-radius:12px;
+      padding:10px 12px;outline:none;min-width:260px;
+    }
+    .chip{
+      background:var(--glass-2);color:var(--text);
+      border:1px solid var(--border);border-radius:12px;
+      padding:8px 12px;cursor:pointer;user-select:none;font-size:13px;
+    }
+    .chip.active{outline:2px solid var(--accent)}
+    .btn{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:8px 12px;cursor:pointer}
+    .legend{font-size:12px;color:var(--muted)}
+    .legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 4px -1px 8px}
+    .legend .s3{background:var(--star3)} .legend .s2{background:#e0ebff} .legend .s1{background:#c1d0d6}
+
+    .chapter{margin-bottom:18px; overflow:hidden}
+    .ch-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer}
+    .ch-title{font-size:18px;font-weight:800}
+    .chev{opacity:.9;transition:transform .25s}
+    .collapsed .chev{transform:rotate(-90deg)}
+    .ch-body{padding:0 10px 10px}
+    .sub{margin:10px 6px 12px;border:1px solid var(--border);border-radius:14px;background:var(--glass-2)}
+    .sub > .sub-head{padding:10px 12px;font-weight:700;border-bottom:1px dashed var(--border);display:flex;align-items:center;justify-content:space-between}
+    .section{padding:8px 10px}
+    .section h4{margin:8px 4px 6px;font-size:15px;color:var(--muted);font-weight:800;letter-spacing:.2px}
+    .q-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+    .q{
+      position:relative;border:1px solid var(--border);border-radius:12px;padding:10px 12px;
+      background:rgba(255,255,255,.06);
+    }
+    .q[data-stars="3"]{border-left:4px solid var(--star3)}
+    .q[data-stars="2"]{border-left:4px solid #e0ebff}
+    .q[data-stars="1"]{border-left:4px solid #c1d0d6}
+    .q .line{display:flex;gap:8px;align-items:flex-start}
+    .num{font-weight:800;min-width:26px;opacity:.9}
+    .txt{line-height:1.35}
+    .alts{margin-top:6px;font-size:13px;color:#e9eefb;opacity:.95}
+    .badge{
+      display:inline-flex;align-items:center;gap:6px;margin-left:auto;
+      font-size:12px;color:#1d1d1d;background:rgba(255, 209, 102, .9);
+      padding:3px 8px;border-radius:999px;font-weight:700;
+    }
+    .q[data-stars="2"] .badge{background:rgba(255,255,255,.85)}
+    .q[data-stars="1"] .badge{background:rgba(180,190,200,.85)}
+    .hidden{display:none!important}
+    .note{padding:8px 12px;font-size:12px;color:var(--muted)}
+    .counts{font-size:12px;color:var(--muted)}
+  </style>
 </head>
 <body>
-    This is Body
-</body>
-</html>
+  <div class="container">
+    <header class="glass">
+      <div class="hdr">
+        <div class="title">অধ্যায়সূচি (Glassmorphism)</div>
+        <div class="controls">
+          <input id="q" type="search" placeholder="অনুসন্ধান করুন... (কীওয়ার্ড লিখুন)">
+          <div class="chip active" data-filter="all">সব</div>
+          <div class="chip" data-filter="3">৩⭐</div>
+          <div class="chip" data-filter="2">২⭐</div>
+          <div class="chip" data-filter="1">১⭐</div>
+          <button class="btn" id="expandAll">Expand All</button>
+          <button class="btn" id="collapseAll">Collapse All</button>
+        </div>
+      </div>
+      <div class="legend">
+        লেজেন্ড:
+        <span class="dot s3"></span>অত্যন্ত গুরুত্বপূর্ণ (৩⭐)
+        <span class="dot s2"></span>গুরুত্বপূর্ণ (২⭐)
+        <span class="dot s1"></span>মৌলিক/সহায়ক (১⭐)
+        <span class="counts" id="counts"></span>
+      </div>
+    </header>
+
+    <main id="toc">
+
+      <!-- অধ্যায় ১ -->
+      <section class="chapter glass" id="ch1">
+        <div class="ch-head">
+          <div class="ch-title">অধ্যায়-১ : কর্মক্ষেত্রের স্বাস্থ্য ও নিরাপত্তা ব্যবস্থাপনা</div>
+          <div class="chev">▾</div>
+        </div>
+        <div class="ch-body">
+          <div class="sub">
+            <div class="sub-head">
+              <div>উপ-অধ্যায় ১.১: কর্মক্ষেত্রের স্বাস্থ্যবিধি ও পরিষ্কার-পরিচ্ছন্নতার প্রয়োজনীয়তা ও ক্ষেত্রসমূহ</div>
+            </div>
+            <div class="section">
+              <h4>সংক্ষিপ্ত প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">১।</span><span class="txt">কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য বলতে কী বুঝ?</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য কী?</div>
+                </li>
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">২।</span><span class="txt">কর্মক্ষেত্রের নিরাপত্তা নির্দেশিকাসমূহ কী?</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রে নিরাপত্তা বিধানের ক্ষেত্রে কী কী ব্যবস্থা গ্রহণ করা প্রয়োজন?</div>
+                </li>
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">৩।</span><span class="txt">ব্যক্তিগত নিরাপত্তা সরঞ্জামগুলো উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, ব্যক্তিগত নিরাপত্তা সরঞ্জামগুলো কী কী?</div>
+                </li>
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">৪।</span><span class="txt">চোখের নিরাপত্তা সরঞ্জামগুলো কী কী?</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, চোখের নিরাপত্তা সরঞ্জামগুলো উল্লেখ কর।<br>অথবা, চোখের নিরাপত্তা সরঞ্জামগুলো বর্ণনা কর।</div>
+                </li>
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">৫।</span><span class="txt">মুখমণ্ডলের নিরাপত্তা সরঞ্জামগুলো কী কী?</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, মুখমণ্ডলের নিরাপত্তায় কী কী সরঞ্জামের প্রয়োজন হয়?<br>অথবা, মুখমণ্ডলের নিরাপত্তায় কী কী ব্যবস্থা গ্রহণ করা প্রয়োজন?</div>
+                </li>
+
+                <li class="q" data-stars="1">
+                  <div class="line"><span class="num">৬।</span><span class="txt">পায়ের পাতার নিরাপত্তা সরঞ্জামগুলো কী কী?</span><span class="badge">⭐️</span></div>
+                  <div class="alts">অথবা, পায়ের পাতার নিরাপত্তা সরঞ্জামগুলো লেখ।<br>অথবা, পায়ের পাতার নিরাপত্তা সরঞ্জামগুলো উল্লেখ কর।</div>
+                </li>
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">৭।</span><span class="txt">কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র ও সমস্যাসমূহ চিহ্নিত কর।</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র ও বাধাগুলো উল্লেখ কর।</div>
+                </li>
+
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">৮।</span><span class="txt">জরুরি অবস্থায় করণীয়সমূহের নির্দেশিকা চিহ্নিত কর।</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, জরুরি অবস্থায় করণীয়সমূহের নির্দেশিকা লেখ।</div>
+                </li>
+
+                <li class="q" data-stars="1">
+                  <div class="line"><span class="num">৯।</span><span class="txt">কারখানায় আলোক ব্যবস্থা কেমন হওয়া প্রয়োজন?</span><span class="badge">⭐️</span></div>
+                  <div class="alts">অথবা, কারখানায় আলোক ব্যবস্থা কেমন হওয়া উচিত?<br>অথবা, কারখানায় আলোর পরিবেশ কেমন হওয়া দরকার?</div>
+                </li>
+
+                <li class="q" data-stars="2">
+                  <div class="line"><span class="num">১০।</span><span class="txt">কম্পিউটার ব্যবহারজনিত কারণে কী কী সমস্যা হতে পারে?</span><span class="badge">⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কম্পিউটার ব্যবহারজনিত কারণে কোন ধরনের সমস্যা হতে পারে?<br>অথবা, কম্পিউটার ব্যবহারজনিত কারণে কোন ধরনের সমস্যা হয়ে থাকে?</div>
+                </li>
+
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">১১।</span><span class="txt">কর্মক্ষেত্রের নিরাপদ ও স্বাস্থসম্মত কর্মপরিবেশের নিয়ামকসমূহ কী কী?</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রের নিরাপদ ও স্বাস্থসম্মত কর্মপরিবেশের উপাদানগুলো উল্লেখ কর।</div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="section">
+              <h4>রচনামূলক প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">১।</span><span class="txt">কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য ও নিরাপত্তার নির্দেশিকাসমূহ বর্ণনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য ও নিরাপত্তার নির্দেশিকাসমূহ কী কী?</div>
+                </li>
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">২।</span><span class="txt">ব্যক্তিগত নিরাপত্তা সরঞ্জামসমূহ সম্পর্কে আলোচনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, ব্যক্তিগত নিরাপত্তা সরঞ্জামসমূহ কী কী?</div>
+                </li>
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">৩।</span><span class="txt">কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র ও সমস্যাসমূহ সম্পর্কে আলোচনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র ও সমস্যাসমূহ তুলে ধর।</div>
+                </li>
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">৪।</span><span class="txt">জরুরি অবস্থায় করণীয় ও যোগাযোগ কৌশল ব্যাখ্যা কর।</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, জরুরি অবস্থায় করণীয় ও যোগাযোগ কৌশল বর্ণনা কর।</div>
+                </li>
+                <li class="q" data-stars="3">
+                  <div class="line"><span class="num">৫।</span><span class="txt">কর্মক্ষেত্রে নিরাপদ ও স্বাস্থ্যসম্মত কর্মপরিবেশের নিয়ামকসমূহ আলোচনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div>
+                  <div class="alts">অথবা, কর্মক্ষেত্রে নিরাপদ ও স্বাস্থ্যসম্মত কর্মপরিবেশের উপাদানগুলো বর্ণনা কর।</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sub">
+            <div class="sub-head">
+              <div>উপ-অধ্যায় ১.২: ডিজিটাল ডিভাইস ব্যবহারে অস্বাস্থ্যকর কর্মপরিবেশ ও ঝুঁকিসমূহ</div>
+            </div>
+            <div class="section">
+              <h4>সংক্ষিপ্ত প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="2"><div class="line"><span class="num">১।</span><span class="txt">আইসিটি কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র বলতে কী বুঝায়?</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, আইসিটি কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্রগুলো কী কী?</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">২।</span><span class="txt">সোশ্যাল মিডিয়ার ক্ষতিকর প্রভাব কী কী?</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, সোশ্যাল মিডিয়ার ক্ষতিকর দিকগুলো কী কী? [বিএমটি-২০২৩]</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৩।</span><span class="txt">স্বাস্থ্যসম্মত আইসিটি কর্মপরিবেশ বলতে কী বুঝায়?</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">[বিএমটি-২০২২] অথবা, স্বাস্থ্যসম্মত আইসিটি কর্মপরিবেশ কী?</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৪।</span><span class="txt">অর্গানমিক স্বাস্থ্যবিধি বলতে কী বুঝায়?</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">[বিএমটি-২০২২] অথবা, অর্গানমিক স্বাস্থ্যবিধি কী?</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৫।</span><span class="txt">কম্পিউটার ব্যবহারে ব্যক্তিগত নিরাপত্তা সরঞ্জামগুলো কী কী?</span><span class="badge">⭐️⭐️</span></div><div class="alts">[বিএমটি-২০২৩]</div></li>
+              </ul>
+            </div>
+            <div class="section">
+              <h4>রচনামূলক প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">আইসিটি কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্রসমূহ বর্ণনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কর্মক্ষেত্রে অনিরাপদ ক্ষেত্রগুলো বর্ণনা কর। [বিএমটি-২০২৩]</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">২।</span><span class="txt">আইসিটি কর্মক্ষেত্রে বৈদ্যুতিক সমস্যাজনিত ক্ষতিকর নিয়ামকগুলো লেখ।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, আইসিটি কর্মক্ষেত্রে বৈদ্যুতিক সমস্যাজনিত ক্ষতিকর উপাদানগুলো লেখ। অথবা, আইসিটি কর্মক্ষেত্রে বৈদ্যুতিক সমস্যাজনিত ক্ষতিকর বিষয়গুলো লেখ।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৩।</span><span class="txt">কম্পিউটার ইন্টারনেট ও সামাজিক নেটওয়ার্ক আসক্তি সম্পর্কে বর্ণনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটার ইন্টারনেট ও সামাজিক নেটওয়ার্ক আসক্তি সম্পর্কে ধারণা দাও।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৪।</span><span class="txt">কম্পিউটার ব্যবহারজনিত বিভিন্ন শারীরিক সমস্যার কারণ লেখ।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটার ব্যবহারজনিত বিভিন্ন শারীরিক সমস্যার কারণ কী? অথবা, কম্পিউটার ব্যবহারজনিত বিভিন্ন শারীরিক সমস্যার কারণ উল্লেখ কর।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৫।</span><span class="txt">সোশ্যাল মিডিয়া ব্যবহারের ক্ষতিকর প্রভাব ও স্বাস্থ্য ঝুঁকিসমূহ বর্ণনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, সোশ্যাল মিডিয়া ব্যবহারের ক্ষতিকর প্রভাব দিকগুলো লেখ।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৬।</span><span class="txt">স্বাস্থ্যসম্মত আইসিটি কর্মপরিবেশের বিবরণ দাও।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, স্বাস্থ্যসম্মত আইসিটি কর্মপরিবেশের বিবরণ ধারণা দাও।</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৭।</span><span class="txt">অরগানমিক স্বাস্থ্যবিধির বিবরণ দাও।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, অরগানমিক স্বাস্থ্যবিধির ধারণা দাও।</div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- অধ্যায় ২ -->
+      <section class="chapter glass" id="ch2">
+        <div class="ch-head"><div class="ch-title">অধ্যায়-২ : কম্পিউটার অ্যাসেম্বলিং ও সংস্থাপন</div><div class="chev">▾</div></div>
+        <div class="ch-body">
+          <div class="sub">
+            <div class="sub-head"><div>উপ-অধ্যায় ২.১: কম্পিউটার হার্ডওয়্যার ও পেরিফেরালসমূহ</div></div>
+            <div class="section">
+              <h4>সংক্ষিপ্ত প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">কম্পিউটারের শ্রেণিবিভাগ দেখাও।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটারের প্রকারভেদ লেখ।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">২।</span><span class="txt">মাইক্রোপ্রসেসরের বৈশিষ্ট্য উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, মাইক্রোপ্রসেসরের বৈশিষ্ট্য লেখ। অথবা, মাইক্রোপ্রসেসরের বৈশিষ্ট্য বর্ণনা কর।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৩।</span><span class="txt">র‍্যাম (RAM) মেমরির বৈশিষ্ট্য উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, RAM মেমরির বৈশিষ্ট্য লেখ। অথবা, RAM মেমরির বৈশিষ্ট্য বর্ণনা কর।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৪।</span><span class="txt">স্থায়ীভাবে ডাটা সংরক্ষণে ROM মেমরি ব্যবহারের কারণ বর্ণনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, স্থায়ীভাবে ডাটা সংরক্ষণে ROM ব্যবহারের কারণ উল্লেখ কর।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৫।</span><span class="txt">কম্পিউটার পেরিফেরাল কী?</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটার পেরিফেরাল বলতে কী বুঝ?</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৬।</span><span class="txt">কম্পিউটারের বাহ্যিক ও অভ্যন্তরীণ যন্ত্রপাতির তালিকা দেখাও।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটারের বাহ্যিক ও অভ্যন্তরীণ যন্ত্রপাতির তালিকা তৈরি কর।</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৭।</span><span class="txt">কম্পিউটার অ্যাসেম্বলিং বলতে কী বুঝায়? [বিএমটি-২০২৩]</span><span class="badge">⭐️</span></div><div class="alts">অথবা, কম্পিউটার অ্যাসেম্বলিং কী?</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৮।</span><span class="txt">SATA এবং PATA-এর মধ্যে তফাৎ লেখ।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, SATA ও PATA-এর মধ্যে তুলনা কর। অথবা, SATA ও PATA-এর মধ্যে ব্যবধান দেখাও।</div></li>
+              </ul>
+            </div>
+            <div class="section">
+              <h4>রচনামূলক প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">কার্যনীতি, আকার ও ক্ষমতা এবং গঠননীতির ভিত্তিতে বিভক্ত কম্পিউটারসমূহের বৈশিষ্ট্য উল্লেখ কর।</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">২।</span><span class="txt">ডিজিটাল কম্পিউটারের প্রকারভেদ বর্ণনা কর। [বিএমটি-২০২২, ২৩]</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, ডিজিটাল কম্পিউটারের শ্রেণিবিভাগ বর্ণনা/লেখ।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৩।</span><span class="txt">কম্পিউটারের অত্যাবশ্যকীয় পেরিফেরালসমূহের বিবরণ দাও।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটারের অত্যাবশ্যকীয় পেরিফেরালসমূহের বর্ণনা কর।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৪।</span><span class="txt">কম্পিউটারের বাহ্যিক যন্ত্রপাতিসমূহের তালিকা ও বৈশিষ্ট্য লেখ।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটারের বাহ্যিক যন্ত্রপাতিসমূহের তালিকা ও বৈশিষ্ট্য উল্লেখ কর।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৫।</span><span class="txt">AT এবং ATX পাওয়ার সাপ্লাই ইউনিটের মধ্যে তফাত কী?</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, ... ব্যবধান/পার্থক্য লেখ।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৬।</span><span class="txt">কম্পিউটারের অভ্যন্তরীণ যন্ত্রপাতিসমূহের তালিকা ও বৈশিষ্ট্য লেখ।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, ... উল্লেখ কর।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৭।</span><span class="txt">কম্পিউটার অ্যাসেম্বলিং-এর ধাপসমূহ বর্ণনা কর। [বিএমটি-২০২২]</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটারের হার্ডওয়্যার অ্যাসেম্বলিং-এর বিভিন্ন পর্যায়গুলো লেখ।</div></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sub">
+            <div class="sub-head"><div>উপ-অধ্যায় ২.২: কম্পিউটার পেরিফেরাল সংস্থাপন ও ব্যবহার পদ্ধতি</div></div>
+            <div class="section">
+              <h4>সংক্ষিপ্ত প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="1"><div class="line"><span class="num">১।</span><span class="txt">কম্পিউটার পেরিফেরাল কী? একে কয় ভাগে ভাগ করা যায়?</span><span class="badge">⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">২।</span><span class="txt">প্রিন্টারের শ্রেণিবিভাগ দেখাও।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, প্রিন্টারের প্রকারভেদ সংক্ষেপে লেখ। [বিএমটি-২০২২]</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৩।</span><span class="txt">ডট মেট্রিক্স প্রিন্টারের বর্ণনা দাও।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, ধারণা/গঠন ও কার্যপ্রণালি লেখ।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৪।</span><span class="txt">বায়োস সেটিং পরিবর্তন করার পদ্ধতি বর্ণনা কর।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, বায়োস সেটিং পরিবর্তন করার প্রক্রিয়া/পদ্ধতি লেখ।</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৫।</span><span class="txt">ইঙ্কজেট প্রিন্টারের বর্ণনা দাও।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, ধারণা/গঠন ও কার্যপ্রণালি তুলে ধর/লেখ।</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৬।</span><span class="txt">লেজার প্রিন্টারের বর্ণনা দাও।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, ধারণা/গঠন ও কার্যপ্রণালি লেখ/বর্ণনা কর। [বিএমটি-২০২৩]</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৭।</span><span class="txt">লেজার প্রিন্টারের সুবিধাগুলো উল্লেখ কর।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, ভালো/ইতিবাচক দিকগুলো লেখ।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৮।</span><span class="txt">কম্পিউটারের স্পেসিফিকেশন বর্ণনা কর।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, কম্পিউটারের স্পেসিফিকেশন এর ব্যাখ্যা দাও।</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৯।</span><span class="txt">স্ক্যানারের ব্যবহার ও প্রয়োজনীয়তা সম্পর্কে লেখ।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, স্ক্যানারের কাজ বর্ণনা কর। [বিএমটি-২০২২]</div></li>
+              </ul>
+            </div>
+            <div class="section">
+              <h4>রচনামূলক প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">কম্পিউটার পেরিফেরাল-এর শ্রেণিবিভাগ বর্ণনা কর।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, ইনপুট ও আউটপুট পেরিফেরালসমূহ উল্লেখ কর।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">২।</span><span class="txt">ইম্প্যাক্ট ও নন ইম্প্যাক্ট প্রিন্টারের মধ্যে পার্থক্য দেখাও।</span><span class="badge">⭐️⭐️⭐️</span></div><div class="alts">অথবা, ... ব্যবধান তুলে ধর।</div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৩।</span><span class="txt">ডট মেট্রিক্স, ইঙ্কজেট ও লেজার প্রিন্টারের মধ্যে পার্থক্য দেখাও।</span><span class="badge">⭐️</span></div><div class="alts">অথবা, ... ব্যবধান উল্লেখ কর।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৪।</span><span class="txt">কম্পিউটার, প্রিন্টার ও স্ক্যানারের স্পেসিফিকেশন বর্ণনা কর।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, ... স্পেসিফিকেশন ব্যাখ্যা কর।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৫।</span><span class="txt">প্রিন্টার ও স্ক্যানার সংস্থাপন করে কম্পিউটারের সাথে তার সংযোগ স্থাপনের পদ্ধতি বর্ণনা কর। [বিএমটি-২০২২]</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, ... প্রক্রিয়া ব্যাখ্যা কর।</div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- অধ্যায় ৩ -->
+      <section class="chapter glass" id="ch3">
+        <div class="ch-head"><div class="ch-title">অধ্যায়-৩ : কম্পিউটারে লিনাক্স বেইসড সফটওয়্যার ইনস্টলেশন</div><div class="chev">▾</div></div>
+        <div class="ch-body">
+          <div class="sub">
+            <div class="sub-head"><div>উপ-অধ্যায় ৩.১: কম্পিউটারে ব্যবহৃত সফটওয়্যারের ধারণা</div></div>
+            <div class="section">
+              <h4>সংক্ষিপ্ত প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="2"><div class="line"><span class="num">১।</span><span class="txt">ব্যবসায়িক দৃষ্টিকোণ থেকে সফটওয়্যারের শ্রেণিবিভাগ লেখ/উল্লেখ/দেখাও।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">২।</span><span class="txt">সিস্টেম সফটওয়্যার বলতে কী বুঝায়? [বিএমটি-২০২২]</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, সিস্টেম সফটওয়্যার কী? [বিএমটি-২০২৩]</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৩।</span><span class="txt">অ্যাপ্লিকেশন সফটওয়্যার বলতে কী বুঝ?</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, অ্যাপ্লিকেশন সফটওয়্যার কী?</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৪।</span><span class="txt">ইউটিলিটি সফটওয়্যার কাকে বলে?</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, ইউটিলিটি সফটওয়্যার কী?</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৫।</span><span class="txt">অপারেটিং সিস্টেম বলতে কী বুঝ?/অপারেটিং সিস্টেম কী?</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৬।</span><span class="txt">প্যাকেজ সফটওয়্যারের বৈশিষ্ট্য লেখ/উল্লেখ/বর্ণনা কর।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৭।</span><span class="txt">বর্ণভিত্তিক অপারেটিং সিস্টেমের বৈশিষ্ট্যসমূহ লেখ/উল্লেখ কর।</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৮।</span><span class="txt">বর্ণভিত্তিক অপারেটিং সিস্টেমের সুবিধা ও অসুবিধা উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, টেক্সটভিত্তিক OS-এর ভালো-মন্দ দিকগুলো লেখ।</div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৯।</span><span class="txt">ওপেন সোর্স অপারেটিং সিস্টেম কাকে বলে?/কি?</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">১০।</span><span class="txt">ওপেন সোর্স অপারেটিং সিস্টেমের সুবিধা ও অসুবিধা লেখ/উল্লেখ কর।</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">১১।</span><span class="txt">মাল্টিপ্রসেসিং অপারেটিং সিস্টেমের সুবিধা-অসুবিধা লেখ।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">১২।</span><span class="txt">মাল্টিইউজার অপারেটিং সিস্টেমের বৈশিষ্ট্য লেখ/উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">১৩।</span><span class="txt">সিঙ্গেল ইউজার ও মাল্টিইউজার OS-এর মধ্যে পার্থক্য/ব্যবধান/বৈসাদৃশ্য দেখাও।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">১৪।</span><span class="txt">ওপেন সোর্স ও প্রোপ্রাইটারি OS-এর মধ্যে পার্থক্য/ব্যবধান/বৈসাদৃশ্য দেখাও।</span><span class="badge">⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">১৫।</span><span class="txt">ডিস্ট্রিবিউটেড অপারেটিং সিস্টেম কী? এর সুবিধা-অসুবিধা লেখ।</span><span class="badge">⭐️</span></div></li>
+              </ul>
+            </div>
+            <div class="section">
+              <h4>রচনামূলক প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">সফটওয়্যারের প্রকারভেদ/শ্রেণিবিভাগ আলোচনা/বর্ণনা কর। [বিএমটি-২০২৩]</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">২।</span><span class="txt">ফ্রিওয়্যার ও শেয়ারওয়্যারের মধ্যে পার্থক্য/ব্যবধান/বৈসাদৃশ্য দেখাও।</span><span class="badge">⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৩।</span><span class="txt">ইউটিলিটি সফটওয়্যারের তালিকা তৈরি কর/বিবরণ দাও।</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৪।</span><span class="txt">অপারেটিং সিস্টেমের প্রকারভেদ/শ্রেণিবিভাগ ও প্রয়োগক্ষেত্র আলোচনা/লেখ।</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৫।</span><span class="txt">ওপেন সোর্স OS-এর বৈশিষ্ট্য ব্যাখ্যা/উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৬।</span><span class="txt">রিয়েল টাইম OS-এর প্রকারভেদ/শ্রেণিবিভাগ ও ব্যবহার/প্রয়োগ লেখ/উল্লেখ কর।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৭।</span><span class="txt">বর্ণভিত্তিক ও চিত্রভিত্তিক OS-এর মধ্যে পার্থক্য/ব্যবধান/বৈসাদৃশ্য দেখাও।</span><span class="badge">⭐️⭐️</span></div></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sub">
+            <div class="sub-head"><div>উপ-অধ্যায় ৩.২: কম্পিউটারে ব্যবহৃত সফটওয়্যার ইনস্টলেশন</div></div>
+            <div class="section">
+              <h4>সংক্ষিপ্ত প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="2"><div class="line"><span class="num">১।</span><span class="txt">লিনাক্স OS ইনস্টলেশনের উপকরণ/উপাদানগুলো লেখ।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">২।</span><span class="txt">লিনাক্স OS-এর সীমাবদ্ধতা/অসুবিধা/অন্তরায়গুলো লেখ।</span><span class="badge">⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৩।</span><span class="txt">ড্রাইভার সফটওয়্যারের প্রয়োজনীয়তা/গুরুত্ব উল্লেখ/তুলে ধর।</span><span class="badge">⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৪।</span><span class="txt">অ্যাপ্লিকেশন সফটওয়্যার ইনস্টলেশনের ধাপসমূহ উল্লেখ/বর্ণনা কর।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৫।</span><span class="txt">রুট, সোয়াপ ও হোম পার্টিশন বলতে কী বুঝ?/ধারণা দাও।</span><span class="badge">⭐️</span></div></li>
+              </ul>
+            </div>
+            <div class="section">
+              <h4>রচনামূলক প্রশ্নোত্তর</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">লিনাক্স অপারেটিং সিস্টেম ইনস্টলেশনের ধাপসমূহ বর্ণনা/পর্যায়গুলো ব্যাখ্যা কর।</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- অধ্যায় ৪ -->
+      <section class="chapter glass" id="ch4">
+        <div class="ch-head"><div class="ch-title">অধ্যায়-৪ : মাল্টিমিডিয়া প্রজেক্টরের ব্যবহার ও রক্ষণাবেক্ষণ</div><div class="chev">▾</div></div>
+        <div class="ch-body">
+          <div class="sub">
+            <div class="sub-head"><div>সংক্ষিপ্ত প্রশ্নোত্তর</div></div>
+            <div class="section">
+              <ul class="q-list">
+                <li class="q" data-stars="3"><div class="line"><span class="num">১।</span><span class="txt">মাল্টিমিডিয়া কী?/মাল্টিমিডিয়া বলতে কী বুঝ?/কাকে বলে?</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">২।</span><span class="txt">মাল্টিমিডিয়া প্রজেক্টর বলতে কী বুঝ?/কি?</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+              </ul>
+            </div>
+
+            <div class="section">
+              <h4>অনুশীলনী-৪</h4>
+              <ul class="q-list">
+                <li class="q" data-stars="2"><div class="line"><span class="num">৩।</span><span class="txt">রুম/প্রজেক্টর অনুযায়ী সেরা মাউন্ট নির্বাচন করা যায় কীভাবে?</span><span class="badge">⭐️⭐️</span></div><div class="alts">অথবা, রুম অনুসারে প্রজেক্টরের মাউন্ট নির্বাচন প্রক্রিয়া লেখ।</div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৪।</span><span class="txt">মাল্টিমিডিয়া প্রজেক্টরের পর্দার আকার নির্ণয়/উল্লেখ/লেখ।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="3"><div class="line"><span class="num">৫।</span><span class="txt">মাল্টিমিডিয়া প্রজেক্টরের কাজ বর্ণনা কর/কয়েকটি কার্যক্রম লেখ/ব্যবহার উল্লেখ কর। [বিএমটি-২০২৩]</span><span class="badge">⭐️⭐️⭐️</span></div></li>
+                <li class="q" data-stars="2"><div class="line"><span class="num">৬।</span><span class="txt">প্রজেক্টরের স্ক্রিন থেকে প্রজেক্টরের দূরত্বের গাণিতিক ব্যাখ্যা দেখাও।</span><span class="badge">⭐️⭐️</span></div></li>
+                <li class="q" data-stars="1"><div class="line"><span class="num">৭।</span><span class="txt">মাল্টিমিডিয়া </li>
+
+                </ul>
+                </div>
+          </div>
+
+
+                    
+
+
+        </body>
+        </html>
