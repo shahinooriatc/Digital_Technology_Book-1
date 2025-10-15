@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>অধ্যায়ঃ০১- কর্মক্ষেত্রের স্বাস্থ্য ও নিরাপত্তা — উপ-অধ্যায় ১.১ ও ১.২ (ইন্টারেক্টিভ নোট)</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg1:#0f2027;        /* dark teal */
+    --bg2:#203a43;        /* deep blue */
+    --bg3:#2c5364;        /* slate */
+    --text:#eaf4fb;
+    --muted:#b7c7d1;
+    --accent:#6dd5ed;
+    --accent2:#2193b0;
+    --chip:#94e6ff1a;
+    --chip-b:#66d1f3;
+    --card: rgba(255,255,255,.12);
+    --card-b: rgba(255,255,255,.25);
+    --shadow: 0 10px 30px rgba(0,0,0,.28);
+  }
+  [data-theme="light"]{
+    --bg1:#e1f1ff;
+    --bg2:#ffffff;
+    --bg3:#d9ecff;
+    --text:#0d1926;
+    --muted:#355166;
+    --accent:#3db8d9;
+    --accent2:#1b6f86;
+    --chip:#0cb6ff12;
+    --chip-b:#1b8db0;
+    --card: rgba(255,255,255,.65);
+    --card-b: rgba(17,73,102,.20);
+    --shadow: 0 12px 28px rgba(9,30,66,.18);
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: "Hind Siliguri", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Bengali", Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1200px 800px at -10% -10%, rgba(109,213,237,.25), transparent 55%),
+      radial-gradient(900px 600px at 110% 10%, rgba(33,147,176,.22), transparent 50%),
+      linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+    background-attachment: fixed;
+  }
+  *{ box-sizing:border-box; }
+  a{ color: var(--accent); text-decoration: none; }
+  .container{ max-width:1200px; margin:0 auto; padding:24px 18px 60px; }
+
+  .glass{
+    background: var(--card);
+    border:1px solid var(--card-b);
+    box-shadow: var(--shadow);
+    border-radius:16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  header.hero{
+    padding:28px 22px;
+    display:flex;
+    gap:16px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .title h1{ margin:0 0 6px; font-size:clamp(22px, 3vw, 34px); font-weight:700; letter-spacing:.2px;}
+  .title p{ margin:0; color: var(--muted); font-size:14px}
+  .controls{
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;
+  }
+  .btn{
+    border:1px solid var(--card-b);
+    color:var(--text);
+    background: linear-gradient(135deg, rgba(109,213,237,.15), rgba(33,147,176,.15));
+    padding:8px 12px; border-radius:10px; cursor:pointer; transition: .2s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); border-color: var(--accent); }
+  .btn.primary{ background: linear-gradient(135deg, var(--accent2), var(--accent)); color:#fff; border-color: transparent; }
+  .btn.ghost{ background: transparent; }
+  .btn.small{ padding:6px 10px; font-size:13px; }
+
+  .toolbar.glass{ margin-top:14px; padding:14px; display:grid; gap:10px; grid-template-columns: 1fr auto auto auto; align-items:center; }
+  .search{
+    display:flex; align-items:center; gap:10px;
+    background: rgba(255,255,255,.08); border:1px solid var(--card-b); padding:8px 10px; border-radius:12px;
+  }
+  .search input{
+    outline:none; border:none; background:transparent; color:var(--text); width:100%; font-size:15px;
+  }
+  .filters{
+    display:flex; gap:8px; align-items:center;
+  }
+  select, .select{
+    appearance:none; background: rgba(255,255,255,.08);
+    color:var(--text); border:1px solid var(--card-b); border-radius:10px; padding:8px 12px; cursor:pointer;
+  }
+
+  main{ margin-top:18px; display:grid; grid-template-columns: 1fr; gap:16px; }
+
+  .section{ padding:16px; }
+  .section h2{
+    margin: 4px 6px 14px; font-size: 22px; font-weight:700; display:flex; align-items:center; gap:8px;
+  }
+  .meta-line{ color:var(--muted); font-size:13px; margin:0 6px 14px; }
+
+  .qa-card{
+    overflow:hidden;
+  }
+  .qa-card details{
+    padding:0; margin:0; border-radius:inherit;
+  }
+  .qa-card summary{
+    list-style:none; cursor:pointer; position:relative;
+    padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    transition:.2s ease;
+  }
+  .qa-card summary::-webkit-details-marker{ display:none; }
+  .q-left{ display:flex; gap:12px; align-items:center; }
+  .q-badge{
+    min-width:30px; height:30px; display:grid; place-items:center; border-radius:8px; font-weight:700;
+    background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.06));
+    border:1px solid var(--card-b); color:var(--text);
+  }
+  .q-title{ margin:0; font-size:18px; }
+  .q-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+  .badge{
+    font-size:12px; color:var(--text); border:1px solid var(--card-b);
+    padding:4px 8px; border-radius:999px; background: rgba(255,255,255,.06);
+  }
+
+  .qa-content{
+    border-top:1px dashed var(--card-b);
+    padding:16px; display:grid; gap:16px; grid-template-columns: 2.1fr 1fr;
+  }
+  .answer h4, .side h4{ margin:0 0 8px; font-size:16px;}
+  .answer ul{ padding-left:18px; margin:8px 0; }
+  .answer li{ margin:6px 0; line-height:1.55; }
+  .side{
+    padding:10px; border-radius:12px; border:1px dashed var(--card-b);
+    background: rgba(255,255,255,.05);
+  }
+  .chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .chip{
+    padding:6px 10px; font-size:12px; border-radius:999px; background: var(--chip);
+    border:1px solid var(--chip-b); color: var(--text); cursor:pointer; user-select:none;
+  }
+  .chip:hover{ background: rgba(109,213,237,.22); }
+
+  .card-actions{ display:flex; gap:8px; align-items:center; }
+  .copy{ border:1px solid var(--card-b); background: rgba(255,255,255,.06); color:var(--text); padding:6px 10px; border-radius:8px; cursor:pointer; }
+  .copy:hover{ border-color: var(--accent); }
+
+  footer{
+    margin:20px 0 60px; text-align:center; color:var(--muted); font-size:13px;
+  }
+
+  .toc{
+    position:sticky; top:12px; padding:10px; margin-bottom:12px;
+    display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+  }
+  .toc a{ font-size:13px; border:1px solid var(--card-b); padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.05); }
+  .toc a:hover{ border-color: var(--accent); }
+
+  .counter{ font-size:12px; color:var(--muted); margin-left:8px; }
+
+  .top-btn{
+    position:fixed; right:18px; bottom:18px; z-index:10; opacity:.9;
+  }
+
+  @media (max-width: 980px){
+    .toolbar{ grid-template-columns: 1fr; }
+    .qa-content{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+<div>
+    <a href="index.html" class="glass-btn"><button class="btn">Back To Home</button></a>
+</div>
+  <header class="hero glass">
+    <div class="title">
+      <h1>অধ্যায়ঃ০১- কর্মক্ষেত্রের স্বাস্থ্য ও নিরাপত্তা</h1>
+      <p>সংক্ষিপ্ত ও রচনামূলক প্রশ্নোত্তর |  — উপ-অধ্যায় ১.১ ও ১.২</p>
+    </div>
+    <div class="controls">
+      <button id="themeBtn" class="btn">Dark/Light</button>
+      <button id="expandAll" class="btn">Expand All</button>
+      <button id="collapseAll" class="btn ghost">Collapse All</button>
+      <button id="printBtn" class="btn">Print/PDF</button>
+    </div>
+  </header>
+
+  <div class="toolbar glass">
+    <div class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <input id="searchInput" type="search" placeholder="প্রশ্ন/উত্তর/কীওয়ার্ড দিয়ে খুঁজুন (শর্টকাট: /)" />
+    </div>
+    <div class="filters">
+      <select id="chapterFilter" title="অধ্যায়">
+        <option value="">সব অধ্যায়</option>
+        <option value="১.১">উপ-অধ্যায় ১.১</option>
+        <option value="১.২">উপ-অধ্যায় ১.২</option>
+      </select>
+      <select id="typeFilter" title="ধরণ">
+        <option value="">সব ধরণ</option>
+        <option value="সংক্ষিপ্ত">সংক্ষিপ্ত</option>
+        <option value="রচনামূলক">রচনামূলক</option>
+      </select>
+      <span id="resultCount" class="counter">মোট 0 আইটেম</span>
+    </div>
+    <div class="filters">
+      <button id="clearFilters" class="btn small ghost">Clear</button>
+    </div>
+  </div>
+
+  <nav class="toc glass">
+    <a href="#sec-1-1-s">১.১ — সংক্ষিপ্ত</a>
+    <a href="#sec-1-1-l">১.১ — রচনামূলক</a>
+    <a href="#sec-1-2-s">১.২ — সংক্ষিপ্ত</a>
+    <a href="#sec-1-2-l">১.২ — রচনামূলক</a>
+  </nav>
+
+  <main id="main"></main>
+
+  <footer>
+    © Shahinoor Alam | Contact :+8801731023633 | Lecturer (ICT), Imran Ahmad Technical College
+  </footer>
+
+  <button class="btn primary top-btn" id="topBtn">↑ Top</button>
+</div>
+
+<script>
+  // Theme
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  if(savedTheme === 'light'){ root.setAttribute('data-theme','light'); }
+  themeBtn.onclick = () => {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    root.setAttribute('data-theme', isLight ? '' : 'light');
+    localStorage.setItem('theme', isLight ? 'dark' : 'light');
+  };
+
+  // Data: All Q/A (chapter, group, question, answer, keywords, sidenote)
+  const data = [
+    // -------------------- উপ-অধ্যায় ১.১ — সংক্ষিপ্ত --------------------
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-1",
+      question:"কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য বলতে কী বুঝ?",
+      keywords:["নিজস্ব স্বাস্থ্য","ব্যক্তিগত পরিচ্ছন্নতা","পুষ্টি","বিশ্রাম","নিরাপদ অভ্যাস"],
+      sidenote:"শারীরিক-মানসিক-সামাজিক সুস্থতা বজায় রাখাই কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য।",
+      answerHtml:`
+        <ul>
+          <li>কর্মক্ষেত্রে সুস্থভাবে কাজ করার জন্য ব্যক্তির শারীরিক, মানসিক ও সামাজিক সুস্থতা বজায় রাখাকে নিজস্ব স্বাস্থ্য বলা হয়।</li>
+          <li>এর মধ্যে ব্যক্তিগত পরিচ্ছন্নতা, উপযুক্ত পোশাক, পুষ্টি ও ঘুম, রোগ প্রতিরোধ এবং নিরাপদ অভ্যাস অন্তর্ভুক্ত।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-2",
+      question:"কর্মক্ষেত্রের নিরাপত্তা নির্দেশিকাসমূহ কী?",
+      keywords:["SOP","PPE","হাউসকিপিং","লক-আউট","ত্রুটি রিপোর্ট"],
+      sidenote:"কাজের আগে-কাল-শেষ—তিন ধাপে নিরাপত্তা মানলে দুর্ঘটনা কমে।",
+      answerHtml:`
+        <ul>
+          <li><b>কাজ শুরুর আগে:</b> কর্মক্ষেত্র পরিষ্কার রাখা, যন্ত্রের গার্ড ঠিক আছে কি না দেখা, প্রয়োজনীয় PPE পরা, আলো-ভেন্টিলেশন ও এক্সিট যাচাই।</li>
+          <li><b>কাজ চলাকালে:</b> ঢিলে পোশাক/গয়না নয়, ভেজা হাতে বিদ্যুৎ স্পর্শ নয়, রসিকতা/হুজুগে কাজ নয়, রাসায়নিক সাবধানে ধরা, সাইনেজ মানা।</li>
+          <li><b>কাজ শেষে:</b> পাওয়ার অফ/লক-আউট, সরঞ্জাম নির্দিষ্ট স্থানে রাখা, বর্জ্য নিষ্পত্তি, ত্রুটি বা নিকট-মিস রিপোর্ট করা।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-3",
+      question:"ব্যক্তিগত নিরাপত্তা সরঞ্জামগুলো কী কী?",
+      keywords:["PPE","হেলমেট","গগল","গ্লাভস","সেফটি শু","হারনেস"],
+      sidenote:"ঝুঁকি অনুযায়ী PPE নির্বাচন; ক্ষতিগ্রস্ত হলে বদল।",
+      answerHtml:`
+        <ul>
+          <li>মাথা: হেলমেট/হার্ড হ্যাট</li>
+          <li>চোখ: সেফটি গগল/গ্লাস</li>
+          <li>মুখ/শ্বাস: ফেস শিল্ড, মাস্ক/রেসপিরেটর</li>
+          <li>কান: ইয়ারপ্লাগ/ইয়ারমাফ</li>
+          <li>হাত: কটন/রাবার/লেদার/কেমিক্যাল-রেজিস্ট্যান্ট গ্লাভস</li>
+          <li>দেহ: অ্যাপ্রন, কভারঅল, রিফ্লেক্টিভ ভেস্ট, FR পোশাক</li>
+          <li>পা: স্টিল-টো সেফটি শু, অ্যান্টি-স্লিপ/অ্যান্টি-স্ট্যাটিক/গামবুট</li>
+          <li>উচ্চতা: সেফটি বেল্ট/ফুল বডি হারনেস</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-4",
+      question:"চোখের নিরাপত্তা সরঞ্জামগুলো কী কী?",
+      keywords:["সেফটি গ্লাস","গগল","ওয়েল্ডিং শেড","লেজার গগল","অ্যান্টি-গ্লেয়ার"],
+      sidenote:"ঝুঁকির ধরন অনুযায়ী গগল/গ্লাসের শেড ও সিলেকশন বদলায়।",
+      answerHtml:`
+        <ul>
+          <li>সাইড-শিল্ডসহ সেফটি গ্লাস—ধুলো/উড়ন্ত কণা থেকে সুরক্ষা।</li>
+          <li>কেমিক্যাল স্প্ল্যাশ গগল—বায়ুরোধী সিল; রাসায়নিক ছিটা প্রতিরোধ।</li>
+          <li>ওয়েল্ডিং গগল/শেডেড গ্লাস—তীব্র আলো/UV-IR রশ্মি থেকে রক্ষা।</li>
+          <li>লেজার সেফটি গগল—নির্দিষ্ট তরঙ্গদৈর্ঘ্য ফিল্টার করে।</li>
+          <li>অ্যান্টি-গ্লেয়ার/ব্লু-লাইট ফিল্টার গ্লাস—চোখের ক্লান্তি কমায়।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-5",
+      question:"মুখমণ্ডলের নিরাপত্তা সরঞ্জামগুলো কী কী?",
+      keywords:["ফেস শিল্ড","ওয়েল্ডিং হেলমেট","রেসপিরেটর","চুল কভার"],
+      sidenote:"স্পার্ক/কণা/ছিটা—ফেস শিল্ড; বিষাক্ত ধোঁয়া—রেসপিরেটর।",
+      answerHtml:`
+        <ul>
+          <li>ফেস শিল্ড—স্পার্ক, কণা, তরল ছিটা থেকে সুরক্ষা।</li>
+          <li>ওয়েল্ডিং হেলমেট—তীব্র আলো/স্পার্ক থেকে মুখ-চোখ রক্ষা।</li>
+          <li>রেসপিরেটর/মাস্ক—ধুলো, ধোঁয়া, গ্যাস/বাষ্প থেকে সুরক্ষা।</li>
+          <li>প্রয়োজনে দাড়ি/চুল কভার—দূষণ নিয়ন্ত্রণে সহায়ক।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-6",
+      question:"পায়ের পাতার নিরাপত্তা সরঞ্জামগুলো কী কী?",
+      keywords:["স্টিল-টো","অ্যান্টি-স্লিপ","অ্যান্টি-স্ট্যাটিক","গামবুট","পাঙ্কচার-রেজিস্ট"],
+      sidenote:"কাজের ধরন অনুযায়ী সোল/টো-ক্যাপ/ইনসুলেশন বেছে নিন।",
+      answerHtml:`
+        <ul>
+          <li>স্টিল-টো/কম্পোজিট-টো সেফটি শু</li>
+          <li>অ্যান্টি-স্লিপ/অয়েল-রেজিস্ট্যান্ট বুট</li>
+          <li>অ্যান্টি-স্ট্যাটিক বা ইলেকট্রিক্যাল-ইনসুলেটেড শু</li>
+          <li>পাঙ্কচার-রেজিস্ট্যান্ট সোল/মেটাটারসাল গার্ড</li>
+          <li>কেমিক্যাল-রেজিস্ট্যান্ট গামবুট</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-7",
+      question:"কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র/বাধাগুলো চিহ্নিত কর।",
+      keywords:["বৈদ্যুতিক ঝুঁকি","পিচ্ছিল মেঝে","মেশিন গার্ড","অগ্নিঝুঁকি","ভেন্টিলেশন"],
+      sidenote:"হাউসকিপিং + প্রশিক্ষণ = অনিরাপদ অবস্থা দ্রুত কমে।",
+      answerHtml:`
+        <ul>
+          <li>ঢিলে বৈদ্যুতিক তার, ওভারলোডেড প্লাগ, আর্থিং/RCD নেই।</li>
+          <li>পিচ্ছিল মেঝে, চলাচলের পথে বাধা, অগোছালো স্টোরেজ।</li>
+          <li>গার্ডবিহীন মেশিন, ত্রুটিপূর্ণ টুল, গরম পৃষ্ঠ।</li>
+          <li>রাসায়নিক/গ্যাসের ভুল সংরক্ষণ, ধোঁয়া-ধুলো, কম বায়ু চলাচল।</li>
+          <li>অরক্ষিত উচ্চতা প্ল্যাটফর্ম, শব্দ-আলো দূষণ, অগ্নিঝুঁকি।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-8",
+      question:"জরুরি অবস্থায় করণীয়সমূহের নির্দেশিকা চিহ্নিত কর।",
+      keywords:["অ্যালার্ম","৯৯৯","এক্সিট","এক্সটিংগুইশার","ফার্স্ট-এইড"],
+      sidenote:"PASS: Pull–Aim–Squeeze–Sweep (ফায়ার এক্সটিংগুইশার)।",
+      answerHtml:`
+        <ul>
+          <li>অ্যালার্ম চালু, ৯৯৯-এ কল, সুপারভাইজারকে জানান।</li>
+          <li>বিদ্যুৎ/গ্যাসের মূল সুইচ অফ; ছোট আগুনে ABC এক্সটিংগুইশার ব্যবহার।</li>
+          <li>নির্ধারিত নির্গমনপথে দ্রুত বের হোন; লিফট নয়—সিঁড়ি।</li>
+          <li>মাস্টার পয়েন্টে হেডকাউন্ট; আহতদের প্রাথমিক চিকিৎসা।</li>
+          <li>কেমিক্যাল/বিদ্যুৎ ঘটনায় এলাকা আইসোলেট; ডকুমেন্টেশন করুন।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-9",
+      question:"কারখানায় আলোক ব্যবস্থা কেমন হওয়া উচিত?",
+      keywords:["লাক্স","গ্লেয়ার-মুক্ত","CRI","জরুরি লাইট","রক্ষণাবেক্ষণ"],
+      sidenote:"সাধারণ 300–500 লাক্স, সূক্ষ্ম কাজ 700–1000 লাক্স।",
+      answerHtml:`
+        <ul>
+          <li>যথেষ্ট, সমান ও ঝলক-মুক্ত আলো; প্রাকৃতিক+কৃত্রিম আলোর সমন্বয়।</li>
+          <li>সাধারণ কাজ: 300–500 লাক্স; সূক্ষ্ম কাজ: 700–1000 লাক্স।</li>
+          <li>CRI ≥ 80, গ্লেয়ার/ছায়া কমাতে লুমিনেয়ার সঠিক স্থাপন।</li>
+          <li>জরুরি লাইট বাধ্যতামূলক; নিয়মিত মেইনটেন্যান্স।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-10",
+      question:"কম্পিউটার ব্যবহারজনিত কারণে কী কী সমস্যা হতে পারে?",
+      keywords:["CVS","RSI","ঘুমের ব্যাঘাত","স্ট্রেস","শ্রবণ ক্ষতি"],
+      sidenote:"20-20-20 নিয়ম, ব্রেক ও সঠিক সেট-আপে ঝুঁকি কমে।",
+      answerHtml:`
+        <ul>
+          <li>চোখের ক্লান্তি/শুষ্কতা/মাথাব্যথা (Computer Vision Syndrome)।</li>
+          <li>ঘাড়- কাঁধ- পিঠ ব্যথা; RSI/কার্পাল টানেল।</li>
+          <li>মানসিক চাপ, মনোযোগহানি; স্থূলতার ঝুঁকি।</li>
+          <li>উচ্চ ভলিউমে হেডফোন—কানের ক্ষতি।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"সংক্ষিপ্ত", id:"1-1-s-11",
+      question:"নিরাপদ ও স্বাস্থ্যসম্মত কর্মপরিবেশের নিয়ামকসমূহ কী কী?",
+      keywords:["হাউসকিপিং","আলো-বায়ু","ফায়ার সেফটি","PPE","হেলথ চেক"],
+      sidenote:"টেকনিক্যাল+প্রশাসনিক+মানবিক—তিন স্তরেই নিয়ন্ত্রণ।",
+      answerHtml:`
+        <ul>
+          <li>পরিচ্ছন্নতা, বর্জ্য ব্যবস্থাপনা, নিরাপদ পানীয় জল-স্যানিটেশন।</li>
+          <li>আলো-বায়ু, তাপমাত্রা 20–26°C, আর্দ্রতা 40–60%, শব্দ ≤ 65 dB।</li>
+          <li>সেফ লেআউট, সাইনেজ, মেশিন গার্ড, বিদ্যুৎ ও অগ্নি নিরাপত্তা।</li>
+          <li>PPE, প্রশিক্ষণ, SOP, ঝুঁকি মূল্যায়ন, ফার্স্ট-এইড, জরুরি পরিকল্পনা।</li>
+          <li>স্বাস্থ্য পরীক্ষা, বিরতি, মনোসামাজিক সহায়তা।</li>
+        </ul>
+      `
+    },
+
+    // -------------------- উপ-অধ্যায় ১.১ — রচনামূলক --------------------
+    {
+      chapter:"১.১", group:"রচনামূলক", id:"1-1-l-1",
+      question:"কর্মক্ষেত্রে নিজস্ব স্বাস্থ্য ও নিরাপত্তার নির্দেশিকাসমূহ বর্ণনা কর।",
+      keywords:["ব্যক্তিগত স্বাস্থ্য","SOP","PPE","ভঙ্গি","জরুরি প্রস্তুতি"],
+      sidenote:"ব্যক্তিগত শৃঙ্খলা + নিরাপত্তা নির্দেশিকা = দুর্ঘটনা কমে।",
+      answerHtml:`
+        <ul>
+          <li><b>ভূমিকা:</b> সুস্থ কর্মীই উৎপাদনশীল; তাই ব্যক্তিগত স্বাস্থ্য ও নিরাপত্তা অপরিহার্য।</li>
+          <li><b>ব্যক্তিগত পরিচ্ছন্নতা:</b> দৈনিক গোসল, পরিচ্ছন্ন পোশাক, নখ-চুল ছাঁটা; হ্যান্ড হাইজিন।</li>
+          <li><b>উপযুক্ত পোশাক:</b> ঢিলে পোশাক/গয়না নয়; চুল বেঁধে রাখা; সেফটি শু পরা।</li>
+          <li><b>PPE:</b> কাজভেদে হেলমেট, গগল/ফেস শিল্ড, গ্লাভস, কভারঅল ইত্যাদি ব্যবহার।</li>
+          <li><b>পুষ্টি ও বিশ্রাম:</b> পর্যাপ্ত পানি/খাবার; যথেষ্ট ঘুম; ক্লান্তিতে ঝুঁকিপূর্ণ কাজ নয়।</li>
+          <li><b>সঠিক ভঙ্গি:</b> চেয়ার-ডেস্ক উচ্চতা ঠিক; কাঁধ শিথিল, পিঠ সোজা; ভার তোলায় রুল।</li>
+          <li><b>SOP মানা:</b> যন্ত্রের গার্ড না খুলে কাজ; ভেজা হাতে সুইচ নয়; অচেনা রাসায়নিক সাবধান।</li>
+          <li><b>হাউসকিপিং:</b> এলাকা পরিচ্ছন্ন, বর্জ্য আলাদা বিনে; তেল/জল ছিটা সঙ্গে সঙ্গে পরিষ্কার।</li>
+          <li><b>নিরাপত্তা আচরণ:</b> হুজুগে কাজ নয়; মনোযোগ নষ্ট হয় এমন আচরণ পরিহার।</li>
+          <li><b>রিপোর্টিং:</b> ত্রুটি/নিকট-মিস দ্রুত জানানো; প্রিভেন্টিভ মেইনটেন্যান্সে সহযোগিতা।</li>
+          <li><b>জরুরি প্রস্তুতি:</b> এক্সিট রুট, ফায়ার এক্সটিংগুইশার ও ফার্স্ট-এইডের অবস্থান জানা; ড্রিলে অংশগ্রহণ।</li>
+          <li><b>উপসংহার:</b> ব্যক্তিগত শৃঙ্খলা ও প্রশিক্ষণই নিরাপদ কর্মস্থলের ভিত্তি।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"রচনামূলক", id:"1-1-l-2",
+      question:"ব্যক্তিগত নিরাপত্তা সরঞ্জামসমূহ (PPE) সম্পর্কে আলোচনা কর।",
+      keywords:["PPE শ্রেণিবিন্যাস","নির্বাচন মানদণ্ড","রক্ষণাবেক্ষণ","সীমাবদ্ধতা"],
+      sidenote:"PPE শেষ স্তরের নিয়ন্ত্রণ—ইঞ্জিনিয়ারিং/প্রশাসনিক নিয়ন্ত্রণ আগে।",
+      answerHtml:`
+        <ul>
+          <li><b>সংজ্ঞা:</b> কর্মীর দেহকে কর্মক্ষেত্রের ঝুঁকি থেকে রক্ষাকারী সরঞ্জামই PPE।</li>
+          <li><b>শ্রেণিবিন্যাস:</b> মাথা (হেলমেট), চোখ (গগল), মুখ (ফেস শিল্ড), শ্বাস (রেসপিরেটর), কান (ইয়ারপ্লাগ/মাফ), হাত (বিভিন্ন গ্লাভস), দেহ (অ্যাপ্রন/কভারঅল), পা (সেফটি শু), উচ্চতা (হারনেস)।</li>
+          <li><b>নির্বাচন:</b> ঝুঁকির ধরন অনুযায়ী স্ট্যান্ডার্ড (EN/ANSI), ফিট ও আরাম নিশ্চিত করা।</li>
+          <li><b>সঠিক ব্যবহার:</b> Donning/Doffing নিয়ম, সিল-চেক (রেসপিরেটর), ফেস শিল্ড+গগল কম্বিনেশন।</li>
+          <li><b>রক্ষণাবেক্ষণ:</b> পরিষ্কার/শুকানো/সংরক্ষণ; মেয়াদোত্তীর্ণ বা ক্ষতিগ্রস্ত হলে বদল।</li>
+          <li><b>শিক্ষা ও সংস্কৃতি:</b> PPE পরার অভ্যাস গড়া; সুপারভাইজারের মনিটরিং।</li>
+          <li><b>সীমাবদ্ধতা:</b> PPE ঝুঁকি নির্মূল করে না; সঠিক ফিট/সিল না হলে কার্যকারিতা কমে।</li>
+          <li><b>উপসংহার:</b> উপযুক্ত PPE + প্রশিক্ষণ = আঘাত/রোগের ঝুঁকি ব্যাপকভাবে কমে।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"রচনামূলক", id:"1-1-l-3",
+      question:"কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র ও সমস্যাসমূহ আলোচনা কর।",
+      keywords:["বৈদ্যুতিক","পিচ্ছিলতা","রাসায়নিক","উচ্চতা","কন্ট্রোল হায়ারার্কি"],
+      sidenote:"ঝুঁকি শনাক্ত–মূল্যায়ন–নিয়ন্ত্রণ—ধারাবাহিক চক্র।",
+      answerHtml:`
+        <ul>
+          <li><b>বৈদ্যুতিক:</b> খোলা/ছেঁড়া তার, ওভারলোডেড প্লাগ, আর্থিং/RCD অনুপস্থিত।</li>
+          <li><b>যান্ত্রিক:</b> গার্ডহীন মেশিন, চলন্ত অংশে আটকে যাওয়ার আশঙ্কা।</li>
+          <li><b>স্লিপ/ট্রিপ/ফল:</b> ভেজা মেঝে, বাধা, এলোমেলো কেবল।</li>
+          <li><b>অগ্নিঝুঁকি:</b> দাহ্য পদার্থের পাশে তাপ উৎস; জরুরি এক্সিট অবরুদ্ধ।</li>
+          <li><b>রাসায়নিক:</b> ভুল লেবেলিং/স্টোরেজ; বিষাক্ত ধোঁয়া/বাষ্প; স্প্ল্যাশ ঝুঁকি।</li>
+          <li><b>পরিবেশ:</b> অপর্যাপ্ত আলো-বায়ু, অতিরিক্ত তাপ/শব্দ/কম্পন।</li>
+          <li><b>উচ্চতা:</b> রেলিং/হারনেস ছাড়া কাজ; দুর্বল প্ল্যাটফর্ম।</li>
+          <li><b>হাউসকিপিং:</b> অগোছালো স্টোরেজ, ভারের ভুল স্ট্যাকিং, ধুলা-ময়লা।</li>
+          <li><b>মানবীয় কারণ:</b> প্রশিক্ষণের অভাব, তাড়াহুড়া, ক্লান্তি, SOP না মানা।</li>
+          <li><b>নিয়ন্ত্রণ (Hierarchy):</b> নির্মূল/বিকল্প → ইঞ্জিনিয়ারিং → প্রশাসনিক → PPE।</li>
+          <li><b>মনিটরিং:</b> নিয়মিত অডিট/ইন্সপেকশন, ইনসিডেন্ট রিপোর্টিং ও সংশোধনী ব্যবস্থা।</li>
+          <li><b>উপসংহার:</b> পরিকল্পিত নিয়ন্ত্রণ কৌশলে অনিরাপদ অবস্থা দ্রুত কমে।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"রচনামূলক", id:"1-1-l-4",
+      question:"জরুরি অবস্থায় করণীয় ও যোগাযোগ কৌশল বর্ণনা কর।",
+      keywords:["Incident Command","Call Tree","PASS","Headcount","Mock Drill"],
+      sidenote:"দ্রুত সতর্কতা + স্পষ্ট বার্তা + অনুশীলন = ক্ষতি কম।",
+      answerHtml:`
+        <ul>
+          <li><b>ধরন চিহ্নিত:</b> আগুন, বিদ্যুৎস্পৃষ্ট, কেমিক্যাল স্পিল, গ্যাস লিক, দুর্ঘটনা।</li>
+          <li><b>তাৎক্ষণিক পদক্ষেপ:</b> অ্যালার্ম, ৯৯৯ কল, সুপারভাইজারকে জানানো, এলাকা আইসোলেট।</li>
+          <li><b>প্রাথমিক দমন:</b> ABC এক্সটিংগুইশার—<i>PASS</i> (Pull, Aim, Squeeze, Sweep)।</li>
+          <li><b>নির্গমন:</b> নির্ধারিত এক্সিট; লিফট নয়—সিঁড়ি ব্যবহার।</li>
+          <li><b>সমাবেশ:</b> মাস্টার পয়েন্টে হেডকাউন্ট; নিখোঁজ হলে রিপোর্ট।</li>
+          <li><b>চিকিৎসা:</b> ফার্স্ট-এইড; গুরুতর হলে এম্বুলেন্স ব্যবস্থা।</li>
+          <li><b>যোগাযোগ কৌশল:</b> ইনসিডেন্ট কমান্ড, কল-ট্রি/পিএ সিস্টেম, ওয়াকি-টকি; বার্তা—কি/কোথায়/কতজন/কোন ঝুঁকি।</li>
+          <li><b>ডকুমেন্টেশন:</b> ইনসিডেন্ট রিপোর্ট, ছবি/লগ, রুট কজ অ্যানালাইসিস।</li>
+          <li><b>ড্রিল:</b> নিয়মিত মক ড্রিল; ভূমিকা ভিত্তিক প্রশিক্ষণ; পাঠ-শেখা (lessons learned)।</li>
+          <li><b>উপসংহার:</b> প্রস্তুতি ও সমন্বিত যোগাযোগই ক্ষয়ক্ষতি কমায়।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.১", group:"রচনামূলক", id:"1-1-l-5",
+      question:"নিরাপদ ও স্বাস্থ্যসম্মত কর্মপরিবেশের নিয়ামকসমূহ আলোচনা কর।",
+      keywords:["লেআউট","ভেন্টিলেশন","ফায়ার সেফটি","প্রশাসনিক নীতি","কল্যাণ"],
+      sidenote:"মানুষ–মেশিন–পরিবেশের সমন্বিত ব্যবস্থাপনাই লক্ষ্য।",
+      answerHtml:`
+        <ul>
+          <li><b>অবকাঠামো:</b> নিরাপদ লেআউট, পর্যাপ্ত চলাচলপথ/রেলিং, সমতল মেঝে।</li>
+          <li><b>পরিচ্ছন্নতা:</b> পরিকল্পিত হাউসকিপিং ও বর্জ্য ব্যবস্থাপনা; পানীয় জল-স্যানিটেশন।</li>
+          <li><b>আলো-বায়ু-তাপ:</b> যথাযথ আলো, ভেন্টিলেশন; তাপমাত্রা/আর্দ্রতা আরামদায়ক।</li>
+          <li><b>শব্দ/কম্পন:</b> নিয়ন্ত্রণ ব্যবস্থা; প্রয়োজনমতো শ্রবণ সুরক্ষা।</li>
+          <li><b>মেশিন/বৈদ্যুতিক নিরাপত্তা:</b> গার্ড, ইন্টারলক, ই-স্টপ; আর্থিং, RCD/MCB, মানসম্পন্ন তার।</li>
+          <li><b>অগ্নি/রাসায়নিক:</b> ডিটেকশন-সাপ্রেশন, খোলা এক্সিট, MSDS, স্পিল কিট।</li>
+          <li><b>প্রশাসনিক:</b> ঝুঁকি মূল্যায়ন, SOP/পারমিট-টু-ওয়ার্ক, ট্রেনিং, সাইনেজ, অডিট।</li>
+          <li><b>স্বাস্থ্য-কল্যাণ:</b> PPE, ফার্স্ট-এইড/মেডিক্যাল রুম, বিশ্রামঘর, মনোসামাজিক সহায়তা।</li>
+          <li><b>মানবসম্পদ:</b> যুক্তিযুক্ত কর্মঘণ্টা, বিরতি, প্রণোদনা, অংশগ্রহণমূলক নিরাপত্তা সংস্কৃতি।</li>
+          <li><b>ধারাবাহিক উন্নয়ন:</b> ইনসিডেন্ট রিপোর্টিং, সংশোধনী ব্যবস্থা ও ফিডব্যাক।</li>
+          <li><b>উপসংহার:</b> সমন্বিত নীতিতে নিরাপদ ও স্বাস্থ্যসম্মত পরিবেশ নিশ্চিত হয়।</li>
+        </ul>
+      `
+    },
+
+    // -------------------- উপ-অধ্যায় ১.২ — সংক্ষিপ্ত --------------------
+    {
+      chapter:"১.২", group:"সংক্ষিপ্ত", id:"1-2-s-1",
+      question:"আইসিটি কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্র বলতে কী বোঝায়?",
+      keywords:["বৈদ্যুতিক","আরগোনমিক","হাউসকিপিং","সাইবার","মনোসামাজিক"],
+      sidenote:"কেবল, ভেন্ট, আলো, ভঙ্গি ও মনোযোগ—সবই ঝুঁকির উৎস হতে পারে।",
+      answerHtml:`
+        <ul>
+          <li>বৈদ্যুতিক: ক্ষতিগ্রস্ত কেবল, ওভারলোডেড মাল্টিপ্লাগ, আর্থিং/RCD না থাকা।</li>
+          <li>আরগোনমিক: ভুল চেয়ার-ডেস্ক উচ্চতা, মনিটরের ভুল অবস্থান, বিরতিহীন কাজ।</li>
+          <li>হাউসকিপিং: এলোমেলো কেবল, ট্রিপ ঝুঁকি, ধুলো/কম ভেন্টিলেশন।</li>
+          <li>সাইবার/মনোসামাজিক: সোশ্যাল মিডিয়া বিভ্রান্তি, স্ট্রেস, অনলাইন হ্যারাসমেন্ট।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"সংক্ষিপ্ত", id:"1-2-s-2",
+      question:"সোশ্যাল মিডিয়ার ক্ষতিকর প্রভাব কী কী?",
+      keywords:["সময় অপচয়","FOMO","সাইবারবুলিং","প্রাইভেসি","ঘুম ব্যাঘাত"],
+      sidenote:"অল্প-সময়, সঠিক কনটেন্ট, নোটিফিকেশন নিয়ন্ত্রণ—ব্যবহার হোক নিয়ন্ত্রিত।",
+      answerHtml:`
+        <ul>
+          <li>সময় অপচয়, মনোযোগ বিচ্ছিন্নতা, উৎপাদনশীলতা কমে যাওয়া।</li>
+          <li>ভুয়া তথ্য, সাইবারবুলিং/হ্যারাসমেন্ট, প্রাইভেসি লঙ্ঘন।</li>
+          <li>মানসিক চাপ, FOMO, উদ্বেগ-হতাশা; ঘুমের ব্যাঘাত।</li>
+          <li>শারীরিক সমস্যা: গলা/পিঠ ব্যথা, চোখের ক্লান্তি।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"সংক্ষিপ্ত", id:"1-2-s-3",
+      question:"স্বাস্থ্যসম্মত আইসিটি কর্মপরিবেশ বলতে কী বোঝায়?",
+      keywords:["এরগোনমিক সেট-আপ","আলো-বায়ু","বৈদ্যুতিক নিরাপত্তা","ট্রিপ নিয়ন্ত্রণ"],
+      sidenote:"স্বাস্থ্যবান্ধব বিন্যাস + নিরাপত্তা নিয়ন্ত্রণ = ঝুঁকিহীন কাজ।",
+      answerHtml:`
+        <ul>
+          <li>এমন ডেস্ক-চেয়ার-ডিভাইস ও পরিবেশের বিন্যাস যেখানে আলো, বায়ু, তাপমাত্রা উপযোগী, এরগোনমিক নীতি মানা হয় এবং বৈদ্যুতিক/অগ্নি/ট্রিপ ঝুঁকি নিয়ন্ত্রিত থাকে।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"সংক্ষিপ্ত", id:"1-2-s-4",
+      question:"অর্গানমিক স্বাস্থ্যবিধি বলতে কী বোঝায়?",
+      keywords:["এরগোনমিক","ভঙ্গি","বিরতি","মানবশরীর উপযোগী নকশা"],
+      sidenote:"কাজকে মানুষের সঙ্গে খাপ খাইয়ে দেওয়া—নিয়মাবলিই আরগোনমিক স্বাস্থ্যবিধি।",
+      answerHtml:`
+        <ul>
+          <li>মানুষের দেহ ও কাজের ধরন অনুযায়ী কর্মপরিসর/উপকরণ/ভঙ্গি/বিরতি নির্ধারণের নিয়ম, যাতে মাংসপেশি-হাড়-স্নায়ুর অতিরিক্ত চাপ না পড়ে এবং আঘাত এড়ানো যায়।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"সংক্ষিপ্ত", id:"1-2-s-5",
+      question:"কম্পিউটার ব্যবহারে ব্যক্তিগত নিরাপত্তা সরঞ্জামগুলো কী কী?",
+      keywords:["অ্যান্টি-গ্লেয়ার","রিস্ট রেস্ট","ESD স্ট্র্যাপ","লাম্বার সাপোর্ট","ফুটরেস্ট"],
+      sidenote:"দীর্ঘক্ষণ বসে কাজের ক্ষতি কমাতে আরগোনমিক সহায়কের ভূমিকা বড়।",
+      answerHtml:`
+        <ul>
+          <li>অ্যান্টি-গ্লেয়ার/ব্লু-লাইট স্ক্রিন ফিল্টার বা গ্লাস।</li>
+          <li>এরগোনমিক কিবোর্ড/মাউস, রিস্ট রেস্ট/ব্রেস।</li>
+          <li>লাম্বার সাপোর্ট/ফুটরেস্ট, মনিটর স্ট্যান্ড।</li>
+          <li>হার্ডওয়্যার হ্যান্ডলিংয়ে ESD রিস্ট-স্ট্র্যাপ/অ্যান্টি-স্ট্যাটিক ম্যাট।</li>
+          <li>ভলিউম-লিমিটারসহ ইয়ারফোন; ডিভাইস পরিষ্কারে মাস্ক/দস্তানা।</li>
+        </ul>
+      `
+    },
+
+    // -------------------- উপ-অধ্যায় ১.২ — রচনামূলক --------------------
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-1",
+      question:"আইসিটি কর্মক্ষেত্রের অনিরাপদ ও ঝুঁকিপূর্ণ ক্ষেত্রসমূহ বর্ণনা কর।",
+      keywords:["ওভারলোড","ভেন্ট ব্লক","গ্লেয়ার","কেবল ম্যানেজমেন্ট","স্ট্রেস"],
+      sidenote:"ছোট শৃঙ্খলাই বড় দুর্ঘটনা থেকে রক্ষা করে।",
+      answerHtml:`
+        <ul>
+          <li><b>বৈদ্যুতিক:</b> ডেইজি-চেইন করা এক্সটেনশন, মানহীন মাল্টিপ্লাগ, ক্ষতিগ্রস্ত ইনসুলেশন, আর্থিং/সার্জ/RCD নেই।</li>
+          <li><b>অগ্নি ও তাপ:</b> ডিভাইস ভেন্ট ব্লক, ধুলো জমে ওভারহিট, দাহ্য বস্তু পাওয়ার সাপ্লাইয়ের পাশে।</li>
+          <li><b>কেবল ম্যানেজমেন্ট:</b> হাঁটার পথে কেবল—ট্রিপ ও পড়ে যাওয়ার ঝুঁকি।</li>
+          <li><b>হাউসকিপিং:</b> ধুলো-ময়লা, অগোছালো টেবিল, অপর্যাপ্ত আলো-বায়ু।</li>
+          <li><b>আরগোনমিক:</b> ভুল চেয়ার/ডেস্ক উচ্চতা, মনিটরের ভুল অবস্থান, বিরতিহীন বসে থাকা—RSI/ঘাড়-পিঠ ব্যথা।</li>
+          <li><b>শব্দ:</b> ওপেন অফিসে উচ্চ শব্দ—মনোযোগ নষ্ট, স্ট্রেস বৃদ্ধি।</li>
+          <li><b>মনোসামাজিক:</b> সোশ্যাল মিডিয়া বিঘ্ন, ডেডলাইন স্ট্রেস, বার্নআউট।</li>
+          <li><b>সাইবার নিরাপত্তা:</b> অনিরাপদ ওয়াই-ফাই/পাসওয়ার্ড—তথ্যচুরি ঝুঁকি।</li>
+          <li><b>নিয়ন্ত্রণ:</b> কেবল-ট্রে, ভেন্টিলেশন, সার্জ/RCD, এরগোনমিক সেট-আপ, নীতি/প্রশিক্ষণ।</li>
+          <li><b>উপসংহার:</b> সুশৃঙ্খল ব্যবস্থাপনায় আইসিটি ঝুঁকি উল্লেখযোগ্যভাবে কমে।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-2",
+      question:"আইসিটি কর্মক্ষেত্রে বৈদ্যুতিক সমস্যাজনিত ক্ষতিকর উপাদানগুলো লেখ।",
+      keywords:["ওভারলোড","RCD","আরথিং","শর্ট সার্কিট","সার্জ"],
+      sidenote:"লোড ক্যালকুলেশন + আর্থিং + রেগুলার টেস্টিং—বৈদ্যুতিক সুরক্ষা।",
+      answerHtml:`
+        <ul>
+          <li>ওভারলোড সার্কিট/মাল্টিপ্লাগ; নিম্নমানের তার/প্লাগ/অ্যাডাপ্টার।</li>
+          <li>ক্ষতিগ্রস্ত ইনসুলেশন, ভেজা স্থানে সকেট, ভেজা হাতে সুইচ/প্লাগ স্পর্শ।</li>
+          <li>আর্থিং না থাকা বা ত্রুটিপূর্ণ; RCD/MCB অনুপস্থিত/ত্রুটিপূর্ণ।</li>
+          <li>ডিভাইস/UPS ভেন্টিলেশনহীন স্থাপন—ওভারহিট, ধুলো/আর্দ্রতায় শর্ট সার্কিট।</li>
+          <li>কেবলের উপর দিয়ে চেয়ার/টেবিলের চাকা; খোলা টার্মিনাল/লুজ কানেকশন।</li>
+          <li>সার্জ/বজ্রপাত সুরক্ষা না থাকা—ডিভাইস ক্ষতি/আগুন।</li>
+          <li><b>সমাধান:</b> নির্ধারিত লোড, পৃথক সার্কিট, আর্থিং-RCD, কেবল-ট্রে, নিয়মিত টেস্টিং-ট্যাগিং।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-3",
+      question:"কম্পিউটার, ইন্টারনেট ও সামাজিক নেটওয়ার্ক আসক্তি সম্পর্কে বর্ণনা কর।",
+      keywords:["আসক্তি লক্ষণ","FOMO","ডিটক্স","স্ক্রিন-টাইম","মনোসামাজিক প্রভাব"],
+      sidenote:"আচরণগত শৃঙ্খলা ও সময়সীমাই কার্যকর প্রতিকার।",
+      answerHtml:`
+        <ul>
+          <li><b>সংজ্ঞা:</b> অনিয়ন্ত্রিত, অতিরিক্ত ও বাধ্যতামূলক ব্যবহার, যা শিক্ষা/কাজ/স্বাস্থ্য/সম্পর্ক ক্ষতিগ্রস্ত করে।</li>
+          <li><b>লক্ষণ:</b> বারবার চেক, সময় জ্ঞান হারানো, অন্য কাজে অনাগ্রহ, ঘুম কমে যাওয়া।</li>
+          <li><b>মানসিক প্রভাব:</b> উদ্বেগ, হতাশা, একাকিত্ব, আত্মমর্যাদা হ্রাস; FOMO।</li>
+          <li><b>শারীরিক প্রভাব:</b> চোখের ক্লান্তি, ঘাড়-পিঠ ব্যথা, স্থূলতার ঝুঁকি।</li>
+          <li><b>শিক্ষা/কর্মক্ষেত্র:</b> ডেডলাইন মিস, ফল/উৎপাদনশীলতা কমে।</li>
+          <li><b>কারণ:</b> তাত্ক্ষণিক পুরস্কার (লাইক/নোটিফিকেশন), একঘেয়েমি, স্ট্রেস।</li>
+          <li><b>প্রতিকার:</b> স্ক্রিন-টাইম সীমা, 20-20-20 নিয়ম, নোটিফিকেশন কমানো, অফলাইন শখ/ব্যায়াম।</li>
+          <li><b>সহায়তা:</b> প্রয়োজন হলে কাউন্সেলিং, ডিজিটাল ডিটক্স, পরিবার/বন্ধুর সহায়তা।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-4",
+      question:"কম্পিউটার ব্যবহারজনিত বিভিন্ন শারীরিক সমস্যার কারণ লেখ।",
+      keywords:["ভুল ভঙ্গি","RSI","গ্লেয়ার","হেডফোন ভলিউম","পানিশূন্যতা"],
+      sidenote:"এরগোনমিক টিউনিং + নিয়মিত স্ট্রেচ = ব্যথা কমে।",
+      answerHtml:`
+        <ul>
+          <li>মনিটর খুব উঁচু/নিচু—ঘাড়ে টান, মাথাব্যথা।</li>
+          <li>চেয়ারের উচ্চতা ভুল—কোমর/পিঠে ব্যথা, রক্ত সঞ্চালন কমে।</li>
+          <li>কিবোর্ড/মাউস দূরে বা উঁচু—কবজি/কাঁধে চাপ, RSI।</li>
+          <li>বিরতিহীন দীর্ঘসময় বসে থাকা—পেশী শক্ত হয়ে যাওয়া, ক্লান্তি।</li>
+          <li>স্ক্রিন গ্লেয়ার/নীল আলো—চোখ শুষ্কতা, ঝাপসা দেখা, ঘুমে ব্যাঘাত।</li>
+          <li>কম আলো/বদ্ধ ঘর—চোখে অতিরিক্ত চাপ, অস্বস্তি।</li>
+          <li>হেডফোনের উচ্চ ভলিউম—কানের ক্ষতি/টিনিটাস।</li>
+          <li>ধুলাবালিতে অ্যালার্জি; পানিশূন্যতা/বিরতি না নেওয়া।</li>
+          <li><b>প্রতিরোধ:</b> এরগোনমিক সেট-আপ, নিয়মিত স্ট্রেচ, পর্যাপ্ত পানি, নির্ধারিত বিরতি।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-5",
+      question:"সোশ্যাল মিডিয়া ব্যবহারের ক্ষতিকর প্রভাব ও স্বাস্থ্য ঝুঁকিসমূহ বর্ণনা কর।",
+      keywords:["উৎপাদনশীলতা","মানসিক স্বাস্থ্য","প্রাইভেসি","ঘুম","আসক্তি"],
+      sidenote:"নিয়ন্ত্রিত ব্যবহার, সঠিক কনটেন্ট ও স্ক্রিন-ফ্রি সময়—মূল চাবিকাঠি।",
+      answerHtml:`
+        <ul>
+          <li><b>সময় ও মনোযোগ:</b> কাজ ফেলে স্ক্রলিং—উৎপাদনশীলতা কমে।</li>
+          <li><b>মানসিক স্বাস্থ্য:</b> তুলনামূলক মনোভাব/FOMO—উদ্বেগ, হতাশা, আত্মমর্যাদা কমে।</li>
+          <li><b>ঘুম:</b> রাতে স্ক্রিন টাইমে মেলাটোনিন ব্যাহত—ঘুমের মান নষ্ট।</li>
+          <li><b>নিরাপত্তা:</b> সাইবারবুলিং, ডেটা-প্রাইভেসি লঙ্ঘন, স্ক্যাম/ফিশিং।</li>
+          <li><b>শারীরিক:</b> চোখ-ঘাড়-পিঠে ব্যথা, স্থূলতা ঝুঁকি।</li>
+          <li><b>সামাজিক:</b> বাস্তব মিথস্ক্রিয়া কমে, সম্পর্কের টানাপোড়েন।</li>
+          <li><b>প্রতিকার:</b> সময়সীমা/অ্যাপ-লিমিট, কনটেন্ট কিউরেশন, নোটিফিকেশন নিয়ন্ত্রণ, অফলাইন শখ।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-6",
+      question:"স্বাস্থ্যসম্মত আইসিটি কর্মপরিবেশের বিবরণ দাও।",
+      keywords:["মনিটর দূরত্ব","লাম্বার সাপোর্ট","লাক্স","বিরতি 20-20-20","কেবল ম্যানেজমেন্ট"],
+      sidenote:"আরগোনমিক + নিরাপত্তা = সুস্থ ও ফলপ্রসূ ডিজিটাল কর্মস্থল।",
+      answerHtml:`
+        <ul>
+          <li><b>বসার ভঙ্গি:</b> কোমরে লাম্বার সাপোর্ট; পা মেঝেতে/ফুটরেস্টে সমানভাবে।</li>
+          <li><b>চেয়ার-ডেস্ক:</b> কনুই-হাঁটু-কোমর প্রায় ৯০°; সামঞ্জস্যযোগ্য চেয়ার।</li>
+          <li><b>মনিটর:</b> চোখ থেকে ৫০–৭০ সেমি; স্ক্রিনের শীর্ষ চোখের সমতল/একটু নিচে; সামান্য ডাউন টিল্ট।</li>
+          <li><b>কিবোর্ড-মাউস:</b> শরীরের কাছে; কবজি সোজা; রিস্ট রেস্ট বিবেচ্য।</li>
+          <li><b>আলো:</b> 300–500 লাক্স; ঝলক-মুক্ত; জানালার গ্লেয়ার নিয়ন্ত্রণ।</li>
+          <li><b>বায়ু/তাপ:</b> ভেন্টিলেশন; তাপমাত্রা 22–26°C; আর্দ্রতা 40–60%।</li>
+          <li><b>বিরতি:</b> 20-20-20 নিয়ম; প্রতি ঘন্টায় 3–5 মিনিট স্ট্রেচ/হাঁটা।</li>
+          <li><b>নিরাপত্তা:</b> কেবল-ট্রে/ক্লিপ; আর্থিং, RCD/সার্জ প্রটেক্টর; ভেন্ট খোলা রাখা।</li>
+          <li><b>হাইজিন:</b> ধুলো পরিষ্কার, পানির ব্যবস্থা, টয়লেট/এক্সিট সাইনেজ স্পষ্ট।</li>
+          <li><b>নীতি:</b> স্ক্রিন-টাইম গাইডলাইন, সাইবার সেফটি, ইনসিডেন্ট রিপোর্টিং।</li>
+        </ul>
+      `
+    },
+    {
+      chapter:"১.২", group:"রচনামূলক", id:"1-2-l-7",
+      question:"অর্গানমিক স্বাস্থ্যবিধির বিবরণ দাও।",
+      keywords:["নিরপেক্ষ ভঙ্গি","Anthropometry","জব রোটেশন","স্ট্রেচিং","লিফটিং টেকনিক"],
+      sidenote:"কাজকে মানুষের সঙ্গে খাপ খাইয়ে নিলেই দীর্ঘমেয়াদি ব্যথা-আঘাত কমে।",
+      answerHtml:`
+        <ul>
+          <li><b>মূলনীতি:</b> কাজকে মানুষের সাথে মানানসই করা—মানবশরীরের মাপ (Anthropometry) অনুযায়ী নকশা।</li>
+          <li><b>ভঙ্গি-নিয়ম:</b> মাথা-ঘাড় সোজা, কাঁধ শিথিল, কনুই ৯০°, কবজি নিরপেক্ষ; স্ক্রিন চোখের সমতল।</li>
+          <li><b>ওয়ার্কস্টেশন:</b> সামঞ্জস্যযোগ্য চেয়ার-ডেস্ক; ঘন ব্যবহৃত জিনিস হাতের নাগালে।</li>
+          <li><b>পুনরাবৃত্ত কাজ ভাঙা:</b> মাইক্রো-ব্রেক, জব রোটেশন, স্ট্রেচিং রুটিন।</li>
+          <li><b>ম্যানুয়াল হ্যান্ডলিং:</b> ভার শরীরের কাছে, হাঁটু ভাঁজ করে ওঠা, মুচড়ে না তোলা।</li>
+          <li><b>সরঞ্জাম:</b> এরগোনমিক কিবোর্ড/মাউস, রিস্ট রেস্ট, ফুটরেস্ট।</li>
+          <li><b>দৃষ্টিস্বাস্থ্য:</b> যথাযথ আলো, গ্লেয়ার নিয়ন্ত্রণ, 20-20-20 প্রয়োগ।</li>
+          <li><b>প্রশিক্ষণ ও মূল্যায়ন:</b> আরগোনমিক অডিট, ফিডব্যাক-ভিত্তিক উন্নয়ন।</li>
+          <li><b>উপকারিতা:</b> ব্যথা/আঘাত ও অনুপস্থিতি কমে, কাজের মান ও গতি বাড়ে।</li>
+        </ul>
+      `
+    }
+  ];
+
+  // Render
+  const main = document.getElementById('main');
+
+  function section(title, id){
+    const el = document.createElement('section');
+    el.className = 'section glass';
+    el.id = id;
+    el.innerHTML = `<h2>${title}</h2><p class="meta-line"></p><div class="list"></div>`;
+    return el;
+  }
+
+  // Create sections
+  const sec11s = section("উপ-অধ্যায় ১.১ — সংক্ষিপ্ত প্রশ্নোত্তর", "sec-1-1-s");
+  const sec11l = section("উপ-অধ্যায় ১.১ — রচনামূলক প্রশ্নোত্তর", "sec-1-1-l");
+  const sec12s = section("উপ-অধ্যায় ১.২ — সংক্ষিপ্ত প্রশ্নোত্তর", "sec-1-2-s");
+  const sec12l = section("উপ-অধ্যায় ১.২ — রচনামূলক প্রশ্নোত্তর", "sec-1-2-l");
+  main.append(sec11s, sec11l, sec12s, sec12l);
+
+  function createCard(item){
+    const wrap = document.createElement('div');
+    wrap.className = 'qa-card glass';
+    wrap.dataset.chapter = item.chapter;
+    wrap.dataset.group = item.group;
+    wrap.dataset.keywords = item.keywords.join(', ').toLowerCase();
+
+    const details = document.createElement('details');
+    details.id = item.id;
+
+    const summary = document.createElement('summary');
+    summary.innerHTML = `
+      <div class="q-left">
+        <div class="q-badge">Q</div>
+        <div>
+          <h3 class="q-title">${item.question}</h3>
+          <div class="q-tags">
+            <span class="badge">অধ্যায় ${item.chapter}</span>
+            <span class="badge">${item.group}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <span class="badge">${item.keywords.slice(0,3).join(' • ')}</span>
+      </div>
+    `;
+
+    const content = document.createElement('div');
+    content.className = 'qa-content';
+    content.innerHTML = `
+      <div class="answer">
+        <h4>উত্তর</h4>
+        ${item.answerHtml}
+      </div>
+      <aside class="side">
+        <h4>Side Note</h4>
+        <p>${item.sidenote}</p>
+        <h4>Keywords</h4>
+        <div class="chips">
+          ${item.keywords.map(k=>`<span class="chip" data-k="${k}">${k}</span>`).join('')}
+        </div>
+        <div style="margin-top:10px">
+          <button class="copy">Copy Answer</button>
+        </div>
+      </aside>
+    `;
+
+    const copyBtn = content.querySelector('.copy');
+    copyBtn.addEventListener('click', () => {
+      const text = content.querySelector('.answer').innerText.trim();
+      navigator.clipboard.writeText(text).then(()=>{
+        copyBtn.textContent = 'Copied!';
+        setTimeout(()=> copyBtn.textContent='Copy Answer', 1200);
+      });
+    });
+
+    content.querySelectorAll('.chip').forEach(ch=>{
+      ch.addEventListener('click', ()=>{
+        const term = ch.dataset.k.toLowerCase();
+        document.getElementById('searchInput').value = term;
+        filter();
+        window.scrollTo({ top: wrap.offsetTop - 80, behavior:'smooth' });
+      });
+    });
+
+    details.append(summary, content);
+    wrap.append(details);
+    return wrap;
+  }
+
+  // Append cards to sections
+  const lists = {
+    "১.১|সংক্ষিপ্ত": sec11s.querySelector('.list'),
+    "১.১|রচনামূলক": sec11l.querySelector('.list'),
+    "১.২|সংক্ষিপ্ত": sec12s.querySelector('.list'),
+    "১.২|রচনামূলক": sec12l.querySelector('.list'),
+  };
+
+  data.forEach(item => {
+    const key = `${item.chapter}|${item.group}`;
+    lists[key].append( createCard(item) );
+  });
+
+  // Meta counts
+  document.querySelectorAll('.section').forEach(sec=>{
+    const n = sec.querySelectorAll('.qa-card').length;
+    sec.querySelector('.meta-line').textContent = `এই সেকশনে মোট ${n}টি প্রশ্নোত্তর আছে।`;
+  });
+
+  // Search & filters
+  const searchInput = document.getElementById('searchInput');
+  const chapterFilter = document.getElementById('chapterFilter');
+  const typeFilter = document.getElementById('typeFilter');
+  const resultCount = document.getElementById('resultCount');
+  const clearFilters = document.getElementById('clearFilters');
+
+  function filter(){
+    const q = searchInput.value.trim().toLowerCase();
+    const c = chapterFilter.value;
+    const t = typeFilter.value;
+    let visible = 0;
+
+    document.querySelectorAll('.qa-card').forEach(card=>{
+      const matchesText =
+        !q ||
+        card.innerText.toLowerCase().includes(q) ||
+        card.dataset.keywords.includes(q);
+
+      const matchesChapter = !c || card.dataset.chapter === c;
+      const matchesType = !t || card.dataset.group === t;
+
+      const show = matchesText && matchesChapter && matchesType;
+      card.style.display = show ? '' : 'none';
+      if(show) visible++;
+    });
+
+    resultCount.textContent = `মোট ${visible} আইটেম`;
+  }
+  searchInput.addEventListener('input', filter);
+  chapterFilter.addEventListener('change', filter);
+  typeFilter.addEventListener('change', filter);
+  clearFilters.addEventListener('click', ()=>{
+    searchInput.value = ''; chapterFilter.value=''; typeFilter.value='';
+    filter();
+  });
+
+  // Keyboard shortcut: focus search on "/" key
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === '/'){ e.preventDefault(); searchInput.focus(); }
+  });
+
+  // Expand / Collapse
+  document.getElementById('expandAll').onclick = ()=>{
+    document.querySelectorAll('.qa-card details').forEach(d=> d.open = true);
+  };
+  document.getElementById('collapseAll').onclick = ()=>{
+    document.querySelectorAll('.qa-card details').forEach(d=> d.open = false);
+  };
+
+  // Print
+  document.getElementById('printBtn').onclick = ()=> window.print();
+
+  // Top button
+  document.getElementById('topBtn').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
+
+  // Initial filter + focus
+  filter();
+</script>
+
+
+</body>
+</html>
